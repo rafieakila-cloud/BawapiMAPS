@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BawapiMAPS</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",Inter,Arial,sans-serif}
+#top{display:flex;gap:8px;align-items:center;padding:10px 14px;background:#0d0f14;color:#ececec}
+#top b{font-size:16px}#top span{font-size:12px;color:#9AA0AE}
+#q{flex:1;max-width:320px;background:#171A21;color:#ececec;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px 12px}
+#map{height:calc(100vh - 52px);width:100%}
+</style>
+</head>
+<body>
+<div id="top"><b>BawapiMAPS</b><span>peta Leaflet + OpenStreetMap</span><input id="q" placeholder="Cari tempat… Enter"></div>
+<div id="map"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const map=L.map('map').setView([-8.219,114.369],12);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+L.marker([-8.219,114.369]).addTo(map).bindPopup('<b>Banyuwangi</b><br>MTsN 10 ada di Rogojampi.').openPopup();
+let s=null;
+document.getElementById('q').addEventListener('keydown',async e=>{
+  if(e.key!=='Enter')return;
+  const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(e.target.value),{headers:{'Accept':'application/json'}}).then(r=>r.json());
+  if(!r.length){alert('Tidak ketemu.');return;}
+  if(s)map.removeLayer(s);
+  s=L.marker([+r[0].lat,+r[0].lon]).addTo(map).bindPopup(r[0].display_name).openPopup();
+  map.setView([+r[0].lat,+r[0].lon],14);
+});
+</script>
+</body>
+</html>
