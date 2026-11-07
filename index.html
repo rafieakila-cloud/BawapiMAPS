@@ -3,30 +3,38 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0b1220">
-  <title>Bacapi Maps — Keajaiban Dunia (GSB)</title>
+  <meta name="theme-color" content="#ffffff">
+  <title>Bacapi Maps — GSB</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon-192.png">
   <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-  <div id="app">
-    <header class="topbar">
-      <div class="brand"><span class="dot"></span><div><b>Bacapi Maps</b><small>GSB/PKK • Keajaiban Dunia</small></div></div>
-      <div class="modes">
-        <button id="btn3d" class="chip active">3D</button>
-        <button id="btnSat" class="chip">Satelit</button>
-      </div>
-    </header>
-    <div id="map"></div>
-    <button id="listToggle" class="fab" title="Daftar tempat">☰</button>
-    <aside id="drawer" class="drawer hidden">
-      <div class="drawer-head"><b>Tempat (GSB)</b><button id="closeDrawer">✕</button></div>
-      <div id="placeList" class="place-list"></div>
-    </aside>
-    <section id="panel" class="panel hidden" aria-live="polite"></section>
+  <div id="map"></div>
+
+  <div class="search-wrap">
+    <div class="search-box">
+      <span class="s-ico">⌕</span>
+      <input id="searchInput" type="search" placeholder="Cari tempat / GSB ID / negara…" autocomplete="off">
+      <button id="clearSearch" class="s-clear hidden" title="Hapus">✕</button>
+    </div>
+    <div id="searchResults" class="search-results hidden"></div>
   </div>
+
+  <div class="controls">
+    <button id="btnMap" class="ctl active" title="Peta">Peta</button>
+    <button id="btnSat" class="ctl" title="Satelit">Satelit</button>
+    <button id="btnTilt" class="ctl" title="Mode miring 3D">3D Miring</button>
+  </div>
+
+  <button id="listToggle" class="fab" title="Daftar tempat">☰</button>
+  <aside id="drawer" class="drawer hidden">
+    <div class="drawer-head"><b>Tempat (GSB)</b><button id="closeDrawer">✕</button></div>
+    <div id="placeList" class="place-list"></div>
+  </aside>
+  <section id="panel" class="panel hidden" aria-live="polite"></section>
+
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
   <script src="./places.js"></script>
   <script src="./app.js"></script>
